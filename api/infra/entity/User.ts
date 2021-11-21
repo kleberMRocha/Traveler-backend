@@ -1,18 +1,16 @@
-const  {Entity, PrimaryGeneratedColumn, Column} = require("typeorm");
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class User {
-
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+      id: string;
 
     @Column()
-    firstName: string;
+      firstName: string;
 
-    @Column({unique: true})
-    email: string;
+    @Column({ unique: true })
+      email: string;
 
     @Column()
-    password: string;
-
+      password: string;
 }

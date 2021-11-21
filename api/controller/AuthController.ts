@@ -1,12 +1,16 @@
-import { User } from '../infra/entity/User';
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import GetRepostitory from './GetRepostitory';
-require('dotenv').config();
+
+import { User } from '../infra/entity/User';
+
+dotenv.config();
 
 class UserController {
   private _privateKey;
+
   get privateKey(): string {
     return this._privateKey;
   }
@@ -14,6 +18,7 @@ class UserController {
   constructor() {
     this._privateKey = process.env.NODE_PRIVATE_KEY;
   }
+
   public async AuthUser(req: Request, res: Response) {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -22,7 +27,7 @@ class UserController {
       });
     }
     const user = GetRepostitory.repostitory(User);
-    const userAuth = await user.findOne({ where: { email: email } });
+    const userAuth = await user.findOne({ where: { email } });
 
     if (!userAuth) {
       return res.status(403).json({
@@ -44,7 +49,7 @@ class UserController {
           email: userAuth.email,
         };
 
-        var token = jwt.sign({ data:userInfos}, this.privateKey, { expiresIn: '24h' });
+        const token = jwt.sign({ data: userInfos }, this.privateKey, { expiresIn: '24h' });
         return res.status(200).json({ token });
       }
 

@@ -1,7 +1,6 @@
+import { Express } from 'express';
 import Auth from './Auth';
-import { Express } from 'express-serve-static-core';
 
-
-const app = (app: Express) => app.use(Auth);
+const app = (App: Express) => App.use(Auth);
 
 export default app;
