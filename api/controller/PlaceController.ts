@@ -1,6 +1,4 @@
-import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import GetRepostitory from './GetRepostitory';
 
@@ -83,6 +81,31 @@ class PlaceController {
         .json({ message: 'Houve um erro' });
     }
   }
+
+  public async updateImg(req: Request, res: Response) {
+    if (!req.params) return res.status(400);
+    if (!req.body) {
+      return res.status(400)
+        .json({ message: 'Informações insuficientes' });
+    }
+
+    const {place_name, place_desc, img_url} = req.body;
+    const place = GetRepostitory.repostitory(Place);
+
+    const isPlaceExist = await place.findOne(req.params);
+    if (!isPlaceExist) return res.status(400).json({ message: 'Registro não existe' });
+
+    try {
+
+      // await place.update(req.params, {place_name, place_desc, img_url});
+      return res.status(200).json({ message: 'registro atualizado' });
+    } catch (error) {
+      console.log(error);
+      return res.status(500)
+        .json({ message: 'Houve um erro' });
+    }
+  }
+
 
   public async delete(req: Request, res: Response) {
     if (!req.params) return res.status(400);
