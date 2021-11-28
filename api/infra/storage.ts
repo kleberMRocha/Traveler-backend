@@ -4,6 +4,7 @@ import { Place } from '../infra/entity/Place';
 
 import { Request, Response, NextFunction } from 'express';
 import firebase from "firebase-admin";
+import { Attractions } from './entity/attractions';
 const serviceAccount = require('./firebase.json');
 
 const bucket = 'traveller-f5929.appspot.com';
@@ -14,6 +15,15 @@ firebase.initializeApp({
 });
 
 const storage = firebase.storage().bucket();
+
+
+const strategy = (model: 'place' | 'attractions') => {
+       const models = {
+           place: Place,
+           attractions: Attractions
+       }
+    return GetRepostitory.repostitory(models[model]);
+};
 
 export const uploadFiles = (req:Request,res:Response,next:NextFunction) => {
     if(!req.file) return next();
@@ -42,18 +52,22 @@ export const uploadFiles = (req:Request,res:Response,next:NextFunction) => {
 };
 
 export const updateFiles = async (req:Request,res:Response,next:NextFunction) => {
+    
+
     if(!req.file) return next();
     const img = req.file;
     const id = req.params;
 
-    const place = GetRepostitory.repostitory(Place);
+    const model = strategy((req.path.split('/')[1]) as 'place' | 'attractions');
 
-    const {img_url} = await place.findOne(id);
+    const {img_url} = await model.findOne(id);
+
     if(!img_url){
         return res.status(400).json({
             message: 'Registro não encontrado'
         });
     }
+    
     const fileName = (img_url.split('/o/')[1].split('?')[0]);
 
     const file = storage.file(fileName);

@@ -4,27 +4,32 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
-import {Attractions} from "./attractions"; 
+import {Place} from "./Place"; 
+
 
 @Entity()
-export class Place {
+export class Attractions {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  place_name: string;
+  attraction_name: string;
 
   @Column()
-  place_desc: string;
+  attraction_desc: string;
 
   @Column()
   img_url: string;
 
-  @OneToMany(type => Attractions, attractions => attractions.place) 
-  attraction: Attractions[];  
+  @Column()
+  attraction_type: number;
+
+  @ManyToOne(type => Place, place => place.attraction) 
+  place: Place; 
 
   @CreateDateColumn()
   created_at: Date;

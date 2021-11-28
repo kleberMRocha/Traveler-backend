@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 const message = { err: 'Não autorizado' };
 
 const isAuth = (req:Request, res:Response, next:NextFunction) => {
-  const notAllowed = () => res.status(401).json({ message: message.err });
+  const notAllowed = () => res.status(401).json({ message: message.err});
   dotenv.config();
 
   const [, token] = req.headers.authorization.split('Bearer');
@@ -18,6 +18,7 @@ const isAuth = (req:Request, res:Response, next:NextFunction) => {
   try {
     decoded = jwt.verify(token.trim(), process.env.NODE_PRIVATE_KEY);
   } catch (err) {
+    console.log(err);
     notAllowed();
   }
 

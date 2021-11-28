@@ -2,20 +2,21 @@ import { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import GetRepostitory from './GetRepostitory';
 
-import { Place } from '../infra/entity/Place';
+import { Attractions } from '../infra/entity/attractions';
 
 dotenv.config();
 
-class PlaceController {
+class AttractionsController {
   public async create(req: Request, res: Response) {
     if (!req.body) return res.status(400).json({ message: 'Informações insuficientes' });
-    const place = GetRepostitory.repostitory(Place);
-    const newPlace = place.create(req.body);
+    const attraction = GetRepostitory.repostitory(Attractions);
+    const newAttraction = attraction.create(req.body);
     let result;
 
     try {
-      result = await place.save(newPlace);
+      result = await attraction.save(newAttraction);
     } catch (error) {
+      console.log(error);
       return res.status(500)
         .json({ message: 'Houve um erro' });
     }
@@ -25,15 +26,14 @@ class PlaceController {
   }
 
   public async index(req: Request, res: Response) {
-    const place = GetRepostitory.repostitory(Place);
+    const attraction = GetRepostitory.repostitory(Attractions);
     let result;
 
     try {
-      result = await place.find({
-        relations: ['attraction'],
+      result = await attraction.find({
+        relations: ['place'],
       });
     } catch (error) {
-      console.log(error);
       return res.status(500)
         .json({ message: 'Houve um erro' });
     }
@@ -44,13 +44,12 @@ class PlaceController {
 
   public async indexById(req: Request, res: Response) {
     if (!req.params) return res.status(400);
-    const place = GetRepostitory.repostitory(Place);
+    const attraction = GetRepostitory.repostitory(Attractions);
     let result;
 
     try {
-      result = await place.findOne(req.params);
+      result = await attraction.findOne(req.params);
     } catch (error) {
-      console.log(error);
       return res.status(500)
         .json({ message: 'Houve um erro' });
     }
@@ -72,13 +71,13 @@ class PlaceController {
       return res.status(400)
         .json({ message: 'Informações insuficientes' });
     }
-    const place = GetRepostitory.repostitory(Place);
+    const attraction = GetRepostitory.repostitory(Attractions);
 
-    const isPlaceExist = await place.findOne(req.params);
-    if (!isPlaceExist) return res.status(400).json({ message: 'Registro não existe' });
+    const isattractionExist = await attraction.findOne(req.params);
+    if (!isattractionExist) return res.status(400).json({ message: 'Registro não existe' });
 
     try {
-      await place.update(req.params, req.body);
+      await attraction.update(req.params, req.body);
       return res.status(200).json({ message: 'registro atualizado' });
     } catch (error) {
       return res.status(500)
@@ -94,14 +93,14 @@ class PlaceController {
     }
 
     const {img_url} = req.body;
-    const place = GetRepostitory.repostitory(Place);
+    const attraction = GetRepostitory.repostitory(Attractions);
   
-    const isPlaceExist = await place.findOne(req.params);
-    if (!isPlaceExist) return res.status(400).json({ message: 'Registro não existe' });
+    const isattractionExist = await attraction.findOne(req.params);
+    if (!isattractionExist) return res.status(400).json({ message: 'Registro não existe' });
 
 
     try {
-      await place.update(req.params, {...isPlaceExist, img_url});
+      await attraction.update(req.params, {...isattractionExist, img_url});
       return res.status(200).json({ message: 'registro atualizado' });
     } catch (error) {
       console.log(error);
@@ -114,20 +113,19 @@ class PlaceController {
   public async delete(req: Request, res: Response) {
     if (!req.params) return res.status(400);
 
-    const place = GetRepostitory.repostitory(Place);
+    const attraction = GetRepostitory.repostitory(Attractions);
 
-    const isPlaceExist = await place.findOne(req.params);
-    if (!isPlaceExist) return res.status(400).json({ message: 'Registro não existe' });
+    const isattractionExist = await attraction.findOne(req.params);
+    if (!isattractionExist) return res.status(400).json({ message: 'Registro não existe' });
 
     try {
-      await place.delete(req.params);
+      await attraction.delete(req.params);
       return res.status(200).json({ message: 'registro excluido' });
     } catch (error) {
-      console.log(error);
       return res.status(500)
         .json({ message: 'Houve um erro' });
     }
   }
 }
 
-export default PlaceController;
+export default AttractionsController;
