@@ -49,6 +49,11 @@ export const updateFiles = async (req:Request,res:Response,next:NextFunction) =>
     const place = GetRepostitory.repostitory(Place);
 
     const {img_url} = await place.findOne(id);
+    if(!img_url){
+        return res.status(400).json({
+            message: 'Registro não encontrado'
+        });
+    }
     const fileName = (img_url.split('/o/')[1].split('?')[0]);
 
     const file = storage.file(fileName);
@@ -64,7 +69,7 @@ export const updateFiles = async (req:Request,res:Response,next:NextFunction) =>
         next();
     });
     
-    req.body.img_url = `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${fileName}?alt=media`
+    req.body.img_url = `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${fileName}?alt=media`;
     stream.end(img.buffer);
 
 };
