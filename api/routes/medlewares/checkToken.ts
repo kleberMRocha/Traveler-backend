@@ -8,6 +8,8 @@ const isAuth = (req:Request, res:Response, next:NextFunction) => {
   const notAllowed = () => res.status(401).json({ message: message.err});
   dotenv.config();
 
+  if(!req.headers.authorization) return  notAllowed();
+
   const [, token] = req.headers.authorization.split('Bearer');
   let decoded = null;
 

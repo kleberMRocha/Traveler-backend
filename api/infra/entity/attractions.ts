@@ -28,7 +28,9 @@ export class Attractions {
   @Column()
   attraction_type: number;
 
-  @ManyToOne(type => Place, place => place.attraction) 
+  @ManyToOne(type => Place, place => place.attraction, {
+    onDelete: "CASCADE"
+  }) 
   place: Place; 
 
   @CreateDateColumn()
