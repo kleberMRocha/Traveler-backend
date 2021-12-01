@@ -5,33 +5,35 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  JoinColumn,
 } from 'typeorm';
 
-import {Place} from "./Place"; 
+import {Attractions} from "./Attractions"; 
 
 
 @Entity()
-export class Attractions {
+export class Review {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  attraction_name: string;
+  customer_name: string;
 
   @Column()
-  attraction_desc: string;
+  review: string;
 
   @Column()
   img_url: string;
 
-  @Column()
-  attraction_type: number;
+  @Column({default:false})
+  isPublished : boolean;
 
-  @ManyToOne(type => Place, place => place.attraction, {
+  @ManyToOne(type => Attractions, Attractions => Attractions.review, {
     onDelete: "CASCADE"
   }) 
-  place: Place; 
+  attraction: Attractions; 
+
+  @Column({default:5})
+  rate: Number;
 
   @CreateDateColumn()
   created_at: Date;

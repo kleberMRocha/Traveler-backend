@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import GetRepostitory from './GetRepostitory';
 
-import { Attractions } from '../infra/entity/attractions';
+import { Attractions } from '../infra/entity/Attractions';
 
 dotenv.config();
 

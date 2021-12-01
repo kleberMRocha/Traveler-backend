@@ -16,5 +16,5 @@
       "*": ["node_modules/*"]
     }
   },
-  "include": ["api/**/*", "api/infra/entity/.ts"]
+  "include": ["api/**/*", "api/infra/entity/.ts", "api/controller/.ts"]
 }

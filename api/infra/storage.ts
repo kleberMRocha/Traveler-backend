@@ -4,7 +4,7 @@ import { Place } from '../infra/entity/Place';
 
 import { Request, Response, NextFunction } from 'express';
 import firebase from "firebase-admin";
-import { Attractions } from './entity/attractions';
+import { Attractions } from './entity/Attractions';
 const serviceAccount = require('./firebase.json');
 
 const bucket = 'traveller-f5929.appspot.com';

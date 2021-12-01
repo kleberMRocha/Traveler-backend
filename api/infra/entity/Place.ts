@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import {Attractions} from "./attractions"; 
+import {Attractions} from "./Attractions"; 
 
 @Entity()
 export class Place {
