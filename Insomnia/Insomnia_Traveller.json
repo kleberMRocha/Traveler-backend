@@ -1,13 +1,13 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2021-12-03T01:31:07.013Z",
+  "__export_date": "2021-12-03T23:58:17.797Z",
   "__export_source": "insomnia.desktop.app:v2020.5.2",
   "resources": [
     {
       "_id": "req_c0384b0072a1486d877948dc070c4acd",
       "parentId": "fld_35c77a5acb2d4eac9ffbe0add2ef3f09",
-      "modified": 1638492688874,
+      "modified": 1638495993469,
       "created": 1638131328812,
       "url": "http://localhost:4000/auth/",
       "name": "Auth",
@@ -15,7 +15,7 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"email\":\"xxxx@email.com\",\n\t\"password\":\"xxxxx\"\n}"
+        "text": "{\n\t\"email\":\"admin@email.com\",\n\t\"password\":\"123456\"\n}"
       },
       "parameters": [],
       "headers": [
@@ -447,7 +447,7 @@
     {
       "_id": "req_205f3df019e74cfab79150f6aea6b81f",
       "parentId": "fld_5989d1371832473ca7cf76382c07d60b",
-      "modified": 1638494753335,
+      "modified": 1638575827381,
       "created": 1638493982495,
       "url": "http://localhost:4000/attractions/",
       "name": "CREATE",
@@ -499,6 +499,12 @@
             "description": "",
             "id": "pair_739a4267eb874b2b92eb722071de59a9",
             "disabled": false
+          },
+          {
+            "name": "location",
+            "value": "xx xxx xx ",
+            "description": "",
+            "id": "pair_883ea91f755947b29c38bdc22d9c25cc"
           }
         ]
       },
@@ -556,7 +562,7 @@
     {
       "_id": "req_0fbc72c4ccc3474e9e6558354c981cb5",
       "parentId": "fld_5989d1371832473ca7cf76382c07d60b",
-      "modified": 1638494763079,
+      "modified": 1638575841723,
       "created": 1638494042694,
       "url": "http://localhost:4000/attractions/c12eb884-abb0-4b62-af77-a69a21be90cc",
       "name": "UPDATE",
@@ -608,6 +614,12 @@
             "description": "",
             "id": "pair_458e7b91ae7e43a9961ff46af70d5dd5",
             "disabled": false
+          },
+          {
+            "name": "location",
+            "value": "123454",
+            "description": "",
+            "id": "pair_051d205cb3fb47bf9a55cbe341769284"
           }
         ]
       },

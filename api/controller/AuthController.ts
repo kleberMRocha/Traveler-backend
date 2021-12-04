@@ -50,7 +50,7 @@ class UserController {
         };
 
         const token = jwt.sign({ data: userInfos }, this.privateKey, { expiresIn: '24h' });
-        return res.status(200).json({ token });
+        return res.status(200).json({ token, user: userInfos });
       }
 
       return res.status(403).json({

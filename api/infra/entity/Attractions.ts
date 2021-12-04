@@ -29,6 +29,9 @@ export class Attractions {
   @Column()
   attraction_type: number;
 
+  @Column()
+  location: string;
+
   @ManyToOne(type => Place, place => place.attraction, {
     onDelete: "CASCADE"
   }) 
