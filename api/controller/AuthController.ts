@@ -8,7 +8,7 @@ import { User } from '../infra/entity/User';
 
 dotenv.config();
 
-class UserController {
+class AuthController {
   private _privateKey;
 
   get privateKey(): string {
@@ -60,4 +60,4 @@ class UserController {
   }
 }
 
-export default UserController;
+export default AuthController;
