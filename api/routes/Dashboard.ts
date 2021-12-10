@@ -7,8 +7,12 @@ import checkToken from './medlewares/checkToken';
 const routes = Router();
 const dashboardController = new DashboardController();
 
-routes.post('/dashboard/upload', checkToken, multer.single('csv'), async (req, res, next) => {
+routes
+.post('/dashboard/upload', checkToken, multer.single('csv'), async (req, res, next) => {
     return dashboardController.upload(req, res, next)
+})
+.post('/dashboard/upload/:placeId', checkToken, multer.single('csv'), async (req, res, next) => {
+    return dashboardController.uploadAttraction(req, res, next)
 });
 
 export default routes;
