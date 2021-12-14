@@ -1,8 +1,8 @@
 
 import GetRepostitory from '../controller/GetRepostitory';
 import { Place } from '../infra/entity/Place';
-
 import { Request, Response, NextFunction } from 'express';
+
 import firebase from "firebase-admin";
 import { Attractions } from './entity/Attractions';
 const serviceAccount = require('./firebase.json');
@@ -53,7 +53,6 @@ export const uploadFiles = (req:Request,res:Response,next:NextFunction) => {
 
 export const updateFiles = async (req:Request,res:Response,next:NextFunction) => {
     
-
     if(!req.file) return next();
     const img = req.file;
     const id = req.params;
@@ -85,6 +84,26 @@ export const updateFiles = async (req:Request,res:Response,next:NextFunction) =>
     
     req.body.img_url = `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${fileName}?alt=media`;
     stream.end(img.buffer);
+
+};
+
+export const deleteFile = async (req:Request,res:Response,next:NextFunction) => {
+    const places = strategy('place');
+    const {id} = req.params;
+
+    const toBeDeleted = await places.findOne(id);
+    if(!toBeDeleted) return next();
+
+    const fileToDelete = toBeDeleted.img_url;
+    const fileName = (fileToDelete.split('/o/')[1].split('?')[0]);
+
+    try {
+      await storage.file(fileName).delete({ignoreNotFound: true});
+    } catch (error) {
+        console.log(error)
+    }
+    
+    next();
 
 };
 
