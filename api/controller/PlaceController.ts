@@ -97,7 +97,8 @@ class PlaceController {
     const place = GetRepostitory.repostitory(Place);
   
     const isPlaceExist = await place.findOne(req.params);
-    if (!isPlaceExist) return res.status(400).json({ message: 'Registro não existe' });
+    if (!isPlaceExist) return res.status(400)
+      .json({ message: 'Registro não existe' });
 
 
     try {

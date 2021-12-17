@@ -57,18 +57,27 @@ export const updateFiles = async (req:Request,res:Response,next:NextFunction) =>
     const img = req.file;
     const id = req.params;
 
-    const model = strategy((req.path.split('/')[1]) as 'place' | 'attractions');
+    let path =  (req.path.split('/')[1]) === 'places' 
+        ? 'place' 
+        : (req.path.split('/')[1]);
 
-    const {img_url} = await model.findOne(id);
+    const model = strategy(path as 'place' | 'attractions');
+    const placeToUpdateImg = await model.findOne(id);
 
-    if(!img_url){
+    if(!placeToUpdateImg){
         return res.status(400).json({
             message: 'Registro não encontrado'
         });
     }
+
+    const {img_url} = placeToUpdateImg;
+
+    if(!img_url){
+        uploadFiles(req,res,next);
+        return;
+    }
     
     const fileName = (img_url.split('/o/')[1].split('?')[0]);
-
     const file = storage.file(fileName);
 
     const stream = file.createWriteStream({
