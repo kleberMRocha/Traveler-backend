@@ -16,6 +16,7 @@ class ReviewController {
     try {
       result = await review.save(newReview);
     } catch (error) {
+      console.log(error);
       return res.status(500)
         .json({ message: 'Houve um erro' });
     }
@@ -61,6 +62,25 @@ class ReviewController {
         .json({ message: 'Houve um erro' });
     }
 
+
+  }
+  public async delete(req: Request, res: Response) {
+    if (!req.params) return res.status(400);
+
+    const review = GetRepostitory.repostitory(Review);
+
+    const exist = await review.findOne(req.params);
+    if (!exist) return res.status(400).json({ message: 'Registro não existe' });
+
+    try {
+      await review.delete(req.params);
+      return res.status(200).json({ message: 'registro excluido' });
+    } catch (error) {
+      console.log(error);
+      return res.status(500)
+        .json({ message: 'Houve um erro' });
+    }
+    
 
   }
 

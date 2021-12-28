@@ -5,6 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 
 import firebase from "firebase-admin";
 import { Attractions } from './entity/Attractions';
+import { Review } from './entity/Review';
 const serviceAccount = require('./firebase.json');
 
 const bucket = 'traveller-f5929.appspot.com';
@@ -16,11 +17,16 @@ firebase.initializeApp({
 
 const storage = firebase.storage().bucket();
 
+interface IModel{
+    model: 'places' | 'attractions' | 'review'
+}
 
-const strategy = (model: 'place' | 'attractions') => {
+
+const strategy = ({ model }: IModel) => {
        const models = {
-           place: Place,
-           attractions: Attractions
+           places: Place,
+           attractions: Attractions,
+           review: Review
        }
     return GetRepostitory.repostitory(models[model]);
 };
@@ -57,11 +63,9 @@ export const updateFiles = async (req:Request,res:Response,next:NextFunction) =>
     const img = req.file;
     const id = req.params;
 
-    let path =  (req.path.split('/')[1]) === 'places' 
-        ? 'place' 
-        : (req.path.split('/')[1]);
+    let path =  (req.path.split('/')[1]);
 
-    const model = strategy(path as 'place' | 'attractions');
+    const model = strategy({model:path} as IModel);
     const placeToUpdateImg = await model.findOne(id);
 
     if(!placeToUpdateImg){
@@ -97,7 +101,13 @@ export const updateFiles = async (req:Request,res:Response,next:NextFunction) =>
 };
 
 export const deleteFile = async (req:Request,res:Response,next:NextFunction) => {
-    const places = strategy('place');
+    const model =  (): IModel  => {
+       const stringValue =  req.path
+        .split('/')[1];
+        return { model: stringValue } as IModel;
+    };
+
+    const places = strategy(model());
     const {id} = req.params;
 
     const toBeDeleted = await places.findOne(id);
