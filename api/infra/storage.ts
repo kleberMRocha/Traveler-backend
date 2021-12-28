@@ -107,10 +107,10 @@ export const deleteFile = async (req:Request,res:Response,next:NextFunction) => 
         return { model: stringValue } as IModel;
     };
 
-    const places = strategy(model());
+    const db = strategy(model());
     const {id} = req.params;
 
-    const toBeDeleted = await places.findOne(id);
+    const toBeDeleted = await db.findOne(id);
     if(!toBeDeleted) return next();
 
     const fileToDelete = toBeDeleted.img_url;
