@@ -111,8 +111,7 @@ export const deleteFile = async (req:Request,res:Response,next:NextFunction) => 
     const {id} = req.params;
 
     const toBeDeleted = await db.findOne(id);
-    if(!toBeDeleted) return next();
-
+    if(!toBeDeleted || !toBeDeleted.img_url) return next();
     const fileToDelete = toBeDeleted.img_url;
     const fileName = (fileToDelete.split('/o/')[1].split('?')[0]);
 
