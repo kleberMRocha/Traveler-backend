@@ -62,8 +62,8 @@ class DashboardController {
             attraction_name: p.field1, 
             attraction_desc: p.field2,
             attraction_type: p.field3,
-            location: p.field4,
-            place: req.params.placeId as any,
+            location: p.field5,
+            place: p.field4,
             img_url: '',
          }
         });

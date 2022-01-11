@@ -11,7 +11,7 @@ routes
 .post('/dashboard/upload', checkToken, multer.single('csv'), async (req, res, next) => {
     return dashboardController.upload(req, res, next)
 })
-.post('/dashboard/upload/:placeId', checkToken, multer.single('csv'), async (req, res, next) => {
+.post('/dashboard/upload/:type', checkToken, multer.single('csv'), async (req, res, next) => {
     return dashboardController.uploadAttraction(req, res, next)
 });
 
