@@ -14,7 +14,7 @@ routes
 .post('/dashboard/upload/:type', checkToken, multer.single('csv'), async (req, res, next) => {
     return dashboardController.uploadAttraction(req, res, next)
 })
-.get('/dashboard/card', checkToken, (req, res, next) => {
+.get('/dashboard', checkToken, (req, res, next) => {
   return dashboardController.getCardsValue(req, res, next)
 });
 
