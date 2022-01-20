@@ -101,13 +101,19 @@ class DashboardController {
     const attractions = GetRepostitory.repostitory(Attractions);
 
     try {
-      const [, placesCard] = await places.findAndCount();
-      const [, reviewCard] = await review.findAndCount();
-      const [, attractionsCard] = await attractions.findAndCount();
+      const [chartPlace, placesCard] = await places.findAndCount();
+      const [chartReview, reviewCard] = await review.findAndCount();
+      const [chartAtt, attractionsCard] = await attractions.findAndCount();
 
       return res
         .status(200)
-        .json({cards:[
+        .json({
+          chart: {
+            places: chartPlace,
+            review: chartReview,
+            attractions: chartAtt
+          },
+          cards:[
           { places: placesCard },
           { review: reviewCard },
           { attractions: attractionsCard },
