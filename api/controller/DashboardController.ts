@@ -101,9 +101,15 @@ class DashboardController {
     const attractions = GetRepostitory.repostitory(Attractions);
 
     try {
-      const [chartPlace, placesCard] = await places.findAndCount();
-      const [chartReview, reviewCard] = await review.findAndCount();
-      const [chartAtt, attractionsCard] = await attractions.findAndCount();
+      const [chartPlace, placesCard] = await places.findAndCount({
+        relations: ['attraction'],
+      });
+      const [chartReview, reviewCard] = await review.findAndCount({
+        relations: ['attraction'],
+      });
+      const [chartAtt, attractionsCard] = await attractions.findAndCount({
+        relations: ['place'],
+      });
 
       return res
         .status(200)
