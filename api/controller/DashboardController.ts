@@ -131,6 +131,72 @@ class DashboardController {
       });
     }
   }
+
+  public async getCardsValueFilter(req: Request, res: Response, next: NextFunction) {
+    const {id} = req.body; 
+ 
+    const places = GetRepostitory.repostitory(Place);
+    const review = GetRepostitory.repostitory(Review);
+
+    try {
+      const placeFilter = await places.findOne({
+        relations: ['attraction'],
+      });
+
+
+      let reviews = [];
+      let reviewFilter = [];
+
+      if(placeFilter.attraction.length){
+        reviews =  await review.find({
+          relations: ['attraction'],
+        });
+
+        const attractionId = placeFilter.attraction.map((a:{id:string}) => {
+          return a.id;
+        });
+
+        const reviewsByPlace = reviews.filter(r => {
+          return attractionId.includes(r.attraction.id);
+        });
+
+        reviewFilter = reviewsByPlace;
+
+      }
+
+      let { attraction } = placeFilter;
+
+      if(attraction.length){
+        attraction = attraction.map((a: any) => {
+          a.place = JSON.parse(JSON.stringify(placeFilter));
+          delete a.place.attraction;
+          return a;
+        });
+      }
+
+
+      return res
+        .status(200)
+        .json(
+          {
+            chart: {
+              places: placeFilter,
+              review: reviewFilter,
+              attractions: attraction
+            },
+            cards:[
+            { places: 1 },
+            { review: reviewFilter.length },
+            { attractions: attraction ? attraction.length : 0 },
+          ]}
+        );
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        message: 'Houve um erro ao buscar os dados',
+      });
+    }
+  }
 }
 
 export default DashboardController;

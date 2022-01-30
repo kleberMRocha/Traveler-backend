@@ -16,6 +16,9 @@ routes
 })
 .get('/dashboard', checkToken, (req, res, next) => {
   return dashboardController.getCardsValue(req, res, next)
+})
+.get('/dashboard/filter', checkToken, (req, res, next) => {
+  return dashboardController.getCardsValueFilter(req, res, next)
 });
 
 export default routes;
