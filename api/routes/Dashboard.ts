@@ -15,10 +15,10 @@ routes
     return dashboardController.uploadAttraction(req, res, next)
 })
 .get('/dashboard', checkToken, (req, res, next) => {
-  return dashboardController.getCardsValue(req, res, next)
+  return dashboardController.getValues(req, res, next)
 })
 .get('/dashboard/filter', checkToken, (req, res, next) => {
-  return dashboardController.getCardsValueFilter(req, res, next)
+  return dashboardController.getValueFilter(req, res, next)
 });
 
 export default routes;

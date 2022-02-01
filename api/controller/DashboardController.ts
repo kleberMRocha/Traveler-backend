@@ -95,7 +95,7 @@ class DashboardController {
       });
   }
 
-  public async getCardsValue(req: Request, res: Response, next: NextFunction) {
+  public async getValues(req: Request, res: Response, next: NextFunction) {
     const places = GetRepostitory.repostitory(Place);
     const review = GetRepostitory.repostitory(Review);
     const attractions = GetRepostitory.repostitory(Attractions);
@@ -132,7 +132,7 @@ class DashboardController {
     }
   }
 
-  public async getCardsValueFilter(req: Request, res: Response, next: NextFunction) {
+  public async getValueFilter(req: Request, res: Response, next: NextFunction) {
     const {id} = req.body; 
  
     const places = GetRepostitory.repostitory(Place);
