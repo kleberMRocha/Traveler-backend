@@ -181,7 +181,7 @@ class DashboardController {
         .json(
           {
             chart: {
-              places: placeFilter,
+              places: [placeFilter],
               review: reviewFilter,
               attractions: attraction
             },
