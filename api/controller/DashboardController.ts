@@ -133,14 +133,15 @@ class DashboardController {
   }
 
   public async getValueFilter(req: Request, res: Response, next: NextFunction) {
-    const {id} = req.body; 
- 
+    const {id} = req.query; 
+
     const places = GetRepostitory.repostitory(Place);
     const review = GetRepostitory.repostitory(Review);
 
     try {
       const placeFilter = await places.findOne({
         relations: ['attraction'],
+        where:{id}
       });
 
 
